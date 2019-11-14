@@ -14,14 +14,25 @@ const TableFoot = ()=>{
     );
 }
 
-const Table = ()=>{
+const Table = ({children})=>{
+    
     return (
     <table className={styles.container}>
-    <TableHead />
-    <TableBody />
-    <TableFoot />
+      {children}
     </table>
     );
   }
 
-export default Table;
+
+
+const TableTemplate = ()=>{
+    return (
+    <Table >
+    <TableHead />
+    <TableBody />
+    <TableFoot />
+    </Table>
+    );
+  }
+
+export default TableTemplate;
