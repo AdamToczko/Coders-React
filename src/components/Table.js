@@ -1,9 +1,11 @@
 import React from "react";
-
+import TableHead from "./TableBody";
+import TableBody from "./TableHead";
+import styles from "./Table.module.css"
 
 const TableFoot = ()=>{
     return (
-    <tfoot>
+    <tfoot className={styles.borders} >
         <tr>
         <td>Sum</td>
         <td>$180</td>
@@ -14,7 +16,7 @@ const TableFoot = ()=>{
 
 const Table = ()=>{
     return (
-    <table>
+    <table className={styles.container}>
     <TableHead />
     <TableBody />
     <TableFoot />
