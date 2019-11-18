@@ -3,6 +3,8 @@ import logo from './logo.svg';
 import './App.css';
 import Table from "./components/Table";  
 import TableTemplate from './components/Table';
+import Chart from './components/Chart'
+import Chart2 from './components/Chart2'
 
 function App() {
   return (
@@ -22,6 +24,10 @@ function App() {
         </a>
       </header>
       <TableTemplate />
+      <div className="wrapper">
+        <Chart />
+        <Chart2 />
+      </div>
     </div>
   );
 }

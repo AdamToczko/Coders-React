@@ -20,3 +20,18 @@
 .App-link {
   color: #09d3ac;
 }
+
+.wrapper{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  background-color: rgba(50, 247, 10, 0.05);
+}
+
+.chart {
+width: 50%;
+}
+
+.chart2 {
+  width: 50%;
+}
