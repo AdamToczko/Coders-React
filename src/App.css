@@ -35,3 +35,9 @@ width: 50%;
 .chart2 {
   width: 50%;
 }
+
+.App-btn {
+  font-size: calc(10px + 2vmin);
+  color: white;
+  background-color: #09d3ac; 
+}

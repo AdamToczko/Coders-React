@@ -1,27 +1,32 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
-import Table from "./components/Table";  
+import Button from './components/Button'
 import TableTemplate from './components/Table';
 import Chart from './components/Chart'
 import Chart2 from './components/Chart2'
+import Input from './components/Input'
+import Todo from './components/Todo'
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          zmiana tekstu <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+    <header className="App-header">
+    <p style={{color: 'red'}}>Task Button </p>
+      <Button 
+      label={'Wciśnij mnie'}
+      onButtonClick={(event)=>{
+        console.log('kliknięto przycisk');
+      }
+      }
+      />
+      <p style={{color: 'red'}}>Task input  </p>
+      <Input />
+        
+      <p style={{color: 'red'}}>Task Todo
+        zainstalowalem loader z semantic Ui ale zeby go 
+        zobaczyc trzeba zmienic netwoork na slow 
+        Lista ponizej z serwera z projektu z JS </p>
+      <Todo />
       </header>
       <TableTemplate />
       <div className="wrapper">
