@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import Form from './components/Form';
-
+import RegisterForm from './components/RegisterForm'
 
 function App() {
   return (
@@ -13,9 +13,9 @@ function App() {
        <Form />
     </div>
       </header>
-      
+      <RegisterForm/>
       <div className="wrapper">
-        
+      
       </div>
     </div>
   );
