@@ -7,16 +7,20 @@ function App() {
   return (
     <div className="App">
     <header className="App-header">
-      <p style={{color: 'red'}}>Task Form</p>
+      <p style={{color: 'red'}}>Task 3.1 Form</p>
     <div>
-       
        <Form />
     </div>
-      </header>
+    <br></br>
+    <p style={{color: 'red'}}>Task 3.2 Registration </p>
+    <div>
       <RegisterForm/>
-      <div className="wrapper">
-      
       </div>
+      <div className="wrapper"></div>
+      </header>
+      
+      
+      
     </div>
   );
 }

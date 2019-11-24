@@ -17,122 +17,124 @@
 // Część 3
 // jeśli walidacja nie przejdzie, trzeba wyświetlić komunikat błędu "ValidationError"
 // jeśli walidacja się powiedzie, trzeba wyświeltić komunikat "User created"
+import React from 'react';
 
-// class RegisterForm extends React.Component{
-//     // ...
-// }
+class RegisterForm extends React.Component {
+	state = {
+		email: '',
+        password: '',
+        confirmPass: '',
+		agreement: true,
+		imBusy: false,
+		imWithError: false,
+		isValidated: false
+	};
 
+handleChange = (event) => {
+    const { type, name, value, checked } = event.target;
 
-
-import React from "react";
-import { Formik } from "formik";
-import { Input, Checkbox } from "semantic-ui-react";
-import * as Yup from "yup";
-
-
-const accountFormSchema = Yup.object().shape({
-  email: Yup.string()
-    .max(30, "Too long buddy")
-    .email("Wrong email!")
-    .required("Required!"),
-  password: Yup.string()
-    .min(8, "Too short! Min 8 chars"),
-    // .matches(new RegExp(/[a-zA-Z]\d\s/g), "Wrong password format."),
-    confirmPassword: Yup.string()
-    .required()
-    .test('passwords-match', 'Passwords must match you fool', function(value) {
-      return this.parent.password === value;
-    }),
-  agreeToTerms: Yup.boolean()
-    .test(
-      'is-true',
-      'Must agree to terms to continue',
-      value => value === true
-    ),
-});
-
-const TextInput = props => {
-  const { name, errors, touched, agreedTerms } = props;
-  return (
-    <div>
-      <Input {...props} error={errors[name] && touched[name]} />
-      <div>{errors[name] && touched[name] && errors[name]}</div>
-    </div>
-  );
+    if (type === 'checkbox') {
+        this.setState({ [name]: checked });
+    } else {
+        this.setState({ [name]: value });
+    }
 };
 
-const RegisterForm = () => (
-  <div>
-    <h1>Register form</h1>
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
-        confirmPassword: "",
-        agreedTerms: false,
-      }}
-      validationSchema={accountFormSchema}
-      onSubmit={(values, { setSubmitting }) => {
-        setSubmitting(true);
+isFormValid = () => {
+    const { email, password, confirmPass, agreement } = this.state;
+
+    const isEmailValid = (email !== '') && (email.includes('@'));
+    const isPasswordValid = password.length > 7;
+    const isConfirmedValid = (confirmPass.length >7) && (confirmPass === password);
+    const isAgreementValid = agreement === true;
+
+    const conditions = [ isEmailValid, isPasswordValid, isConfirmedValid, isAgreementValid ];
+
+    const isConditionsValid = !conditions.includes(false);
+
+    return isConditionsValid;
+};
+
+    onFormSubmit = (event) => {
+    event.preventDefault();
+
+    if (this.isFormValid()) {
+        this.setState({ imBusy: true });
+
         setTimeout(() => {
-          alert(JSON.stringify(values, null, 2));
-          setSubmitting(false);
-        }, 2000);
-      }}
-    >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting
-        /* and other goodies */
-      }) => (
-        <form onSubmit={handleSubmit}>
-          <TextInput
-            type="email"
-            name="email"
-            placeholder="Email"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.email}
-            touched={touched}
-            errors={errors}
-          />
-          <TextInput
-            type="password"
-            name="password"
-            placeholder="Password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.password}
-            touched={touched}
-            errors={errors}
-          />
-          <TextInput
-            type="password"
-            name="confirmPassword"
-            placeholder="Confirm Password"
-            onChange={handleChange}
-            onBlur={handleBlur}
-            value={values.confirmPassword}
-            touched={touched}
-            errors={errors}
-          />
-          <Checkbox
-            label="Agree to Terms"
-            type="checkbox"
-            name="agreedTerms"
-            checked={values.agreedTerms}
-            onChange={handleChange}
-          />
-          <button type="submit">Submit</button>
-        </form>
-      )}
-    </Formik>
-  </div>
-);
+            this.setState({
+                email: '',
+                password: '',
+                confirmPass: '',
+                agreement: true,
+                imBusy: false,
+                imWithError: false,
+                isValidated: true
+            });
+        }, 3000);
+    } else {
+        this.setState({ 
+            imWithError: true,
+            isValidated: false 
+        });
+    }
+    };
+
+render() {
+    const { email, password, confirmPass, agreement, imBusy, imWithError, isValidated } = this.state;
+
+    return (
+        <div >
+        {imBusy ? (
+            <span>Please wait</span>
+        ) : (
+            <form onSubmit={this.onFormSubmit}>
+                <div>
+                    <input 
+                    type="email" 
+                    name="email" 
+                    placeholder="Type email" 
+                    value={email} 
+                    onChange={this.handleChange} />
+                </div>
+                <div>
+                    <input
+                    type="password"
+                    name="password"
+                    placeholder="password" 
+                    value={password}
+                    onChange={this.handleChange}
+                    />
+                </div>
+                <div>
+                    <input
+                    type="password"
+                    name="confirmPass"
+                    placeholder="Re-enter password" 
+                    value={confirmPass}
+                    onChange={this.handleChange}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="agreement">Agreement:</label>
+                    <input
+                    type="checkbox"
+                    name="agreement"
+                    checked={agreement}
+                    onChange={this.handleChange}
+                    />
+                </div>
+                <div>
+                    <button type="submit">Register</button>
+                </div>
+                {isValidated && <span>User created</span>}
+                {imWithError && <span>Validation Error</span>}
+
+            </form>
+        )}
+    </div>
+    );
+}
+}
 
 export default RegisterForm;

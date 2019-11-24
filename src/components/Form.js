@@ -27,16 +27,26 @@ class Form extends React.Component{
       this.setState({ [name] : value});
       console.log(value, name)
     }
-
-    
-  //error nie dziala?
-    onFormSubmit = event => {
+    isFormValid = () => {
+      const { age, sex } = this.state;
+  
+      const isAgeValid = age !== '';
+      const isSexValid = sex !== '';
+      const conditions = [ isSexValid, isAgeValid ];
+  
+      const isConditionsValid = !conditions.includes(false);
+  
+      return isConditionsValid;
+  };
+  
+      onFormSubmit = (event) => {
       event.preventDefault();
   
-      if (this.state !== "") {
-       this.setState({
-          imBusy: true
-        });
+      if (this.isFormValid()) {
+          this.setState(
+            { imBusy: true }
+            );
+  
         setTimeout(() => {
           this.setState({
             age: "",
@@ -58,8 +68,8 @@ class Form extends React.Component{
         return(
           <div>
 
-            {imBusy ? <span>Please wait</span>
-            : 
+            {imBusy ? (<span>Please wait</span>)
+            : (
           <form onSubmit={this.onFormSubmit}>
               <label>Choose your age</label>
               <input 
@@ -82,8 +92,6 @@ class Form extends React.Component{
               onChange={this.handleChange} />  */}
 
 
-
-
               <br></br>
               <br></br>
             <label>Choose your sex</label>
@@ -99,11 +107,11 @@ class Form extends React.Component{
               <option>Female</option>
             </select>
             <br></br>
-              <button>Send</button>
+              <button type="submit">Send</button>
            {imWithError && <span>Fill the form please</span> }
 
 
-      </form>
+      </form>)
       }
       </div>
           );
